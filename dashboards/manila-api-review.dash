@@ -1,0 +1,19 @@
+[dashboard]
+title = Manila API Reviews
+description = Reviews for OpenStack API Working Group
+foreach = (project:openstack/manila OR project:openstack/manila-specs)
+
+[section "New Reviews"]
+query = status:open (message:ApiImpact OR message:APIImpact OR is:starred) NOT (reviewer:self) NOT label:Code-Review=-2
+
+[section "Updated Reviews"]
+query = status:open (message:ApiImpact OR message:APIImpact OR is:starred) NOT (label:Code-Review=1,user=gouthamr OR label:Code-Review=-1,user=gouthamr OR label:Code-Review=0,user=gouthamr) AND reviewer:self NOT label:Code-Review=-2
+
+[section "Negative Reviews"]
+query = status:open (message:ApiImpact OR message:APIImpact) label:Code-Review=-1,user=gouthamr AND reviewer:self NOT label:Code-Review=-2
+
+[section "Positive Reviews"]
+query = status:open (message:ApiImpact OR message:APIImpact OR is:starred) label:Code-Review=1,user=gouthamr AND reviewer:self NOT label:Code-Review=-2
+
+[section "Potential API Reviews"]
+query = status:open NOT (message:ApiImpact OR message:APIImpact OR is:starred) file:^manila/api.* NOT label:Code-Review=-2
