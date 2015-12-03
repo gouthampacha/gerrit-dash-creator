@@ -1,22 +1,25 @@
 [dashboard]
 title = New Contributors in Manila (openstack/manila, openstack/manila-specs and openstack/python-manilaclient)
 description = Reviews from New Contributors
-foreach = reviewer:"Welcome, new contributor!" status:open NOT owner:self NOT label:Code-Review<=-1,self NOT label:Code-Review>=1,self (project:openstack/manila OR project:openstack/manila-specs OR project:openstack/python-manilaclient)
+foreach = reviewer:"Welcome, new contributor!" status:open NOT owner:self (project:openstack/manila OR project:openstack/manila-specs OR project:openstack/python-manilaclient)
 
-[section "Failed Jenkins, may need help debugging"]
-query = label:Verified<1,jenkins
+[section "Failed Jenkins, may need help debugging. Not blocked by core reviewer"]
+query = label:Verified=-1 NOT label:Code-Review=-2 NOT label:Code-Review<=-1,self NOT label:Code-Review>=1,self
 
 [section "Needs Feedback (Changes older than 5 days that have not been reviewed by anyone)"]
-query = NOT label:Code-Review<=2 age:5d label:Verified>=1,jenkins
+query = NOT label:Code-Review<=2 age:5d label:Verified>=1 NOT label:Code-Review<=-1,self NOT label:Code-Review>=1,self
 
 [section "Needs final +2"]
-query = label:Code-Review>=2 limit:50
+query = label:Code-Review>=2 limit:50 NOT label:Code-Review<=-1,self NOT label:Code-Review>=1,self
 
 [section "Passed Jenkins, Would appreciate reviews"]
-query = NOT label:Code-Review<=2 age:5d label:Verified>=1,jenkins
+query = label:Verified=1 limit:50 NOT label:Code-Review<=-1,self NOT label:Code-Review>=1,self
 
 [section "Passed Jenkins, No Negative Feedback"]
-query = NOT label:Code-Review>=2 NOT label:Code-Review<=-1 label:Verified>=1,jenkins limit:50
+query = label:Verified>=1 limit:50 NOT label:Code-Review<=-1,self NOT label:Code-Review>=1,self
 
 [section "Wayward Changes (Changes with no code review in the last 2days)"]
-query = NOT label:Code-Review<=2 age:2d label:Verified>=1,jenkins
+query = NOT label:Code-Review<=2 age:2d label:Verified>=1
+
+[section "Completed reviews"]
+query = label:Code-Review>=-2,self

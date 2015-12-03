@@ -1,0 +1,9 @@
+[dashboard]
+title = New Contributors in Manila (openstack/manila, openstack/manila-specs and openstack/python-manilaclient)
+description = Reviews from New Contributors
+foreach = reviewer:"Welcome, new contributor!" status:open project:openstack/manila
+
+[section "all"]
+query =
+
+
